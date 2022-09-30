@@ -34,12 +34,20 @@ class Utils
         $str = strip_tags($str,"<img>");
 
         $RegExp = '/<img.*?>/';
-        preg_match_all($RegExp,$str,$result);
-        $imgArray = $result[0];
+        $res = preg_match_all($RegExp,$str,$result);
+        if ($res) {
+            $imgArray = $result[0];
+        } else {
+            $imgArray = array();
+        }
 
         $RegExp = '/src=[\'\"](.*?)[\'\"]/';
-        preg_match_all($RegExp,$str,$result);
-        $imgUrlArray = $result[1];
+        $res = preg_match_all($RegExp,$str,$result);
+        if ($res) {
+            $imgUrlArray = $result[1];
+        } else {
+            $imgUrlArray = array();
+        }
 
         $str = str_replace($imgArray,$imgUrlArray,$str);
         return $str;
