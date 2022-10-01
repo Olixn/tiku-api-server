@@ -12,12 +12,16 @@ use think\facade\Route;
 
 Route::group('api',function () {
     Route::group('v1',function () {
-
+        Route::get('cron','admin/cron');
+        Route::get('auth','auth/index');
+        Route::get('tips','chaoxing/tips');
+        Route::post('cx','chaoxing/queryAnswer');
+        Route::post('save_one','chaoxing/saveOneQuestion');
     });
 });
+
 
 Route::group('out',function () {
     Route::resource('add','admin');
     Route::resource("active",'active');
-    Route::get('cron','admin/cron');
 });

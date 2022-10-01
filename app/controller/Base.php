@@ -2,15 +2,29 @@
 
 namespace app\controller;
 
+use think\exception\HttpResponseException;
+use think\facade\Config;
 use think\Response;
 
 abstract class Base
 {
     protected $ip;
     protected $sign;
+    protected $redis;
 
     public function __construct()
     {
+        $this->redis = new \Redis();
+        $r = $this->redis->connect(
+            env('redis.host','127.0.0.1'),
+            env('redis.port','6379'),
+            2.5
+        );
+        if (!$r) {
+            throw new HttpResponseException($this->create('','Redis error ~',500));
+        }
+
+
         $this->ip = request()->ip();
         $this->sign = env('sign');
     }

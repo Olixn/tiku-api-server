@@ -22,7 +22,10 @@
     "require": {
         "php": ">=7.2.5",
         "topthink/framework": "^6.0.0",
-        "topthink/think-orm": "^2.0"
+        "topthink/think-orm": "^2.0",
+      "ext-redis": "*",
+        "firebase/php-jwt": "^6.2",
+      "ext-json": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

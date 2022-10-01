@@ -16,10 +16,13 @@ class Utils
      */
     public function filterStr(string $str): string
     {
-        $str = $this->trimAll($str);
         $str = $this->filterHtml($str);
+        $str = $this->trimAll($str);
         $str = $this->ch2en($str);
         $str = $this->filterOther($str);
+        if (strlen($str) == 0) {
+            $str = 'ThinkPHP';
+        }
         return $str;
     }
 
@@ -33,7 +36,7 @@ class Utils
     {
         $str = strip_tags($str,"<img>");
 
-        $RegExp = '/<img.*?>/';
+        $RegExp = '/(&lt;|<)img.*?(&gt;|>)/';
         $res = preg_match_all($RegExp,$str,$result);
         if ($res) {
             $imgArray = $result[0];
