@@ -15,8 +15,8 @@ Route::group('api',function () {
         Route::get('cron','admin/cron');
         Route::get('auth','auth/index');
         Route::get('tips','chaoxing/tips');
-        Route::get('enc','chaoxing/enc');
-        Route::post('cx','chaoxing/queryAnswer');
+        Route::get('enc','chaoxing/enc')->middleware('auth');
+        Route::post('cx','chaoxing/queryAnswer')->middleware('auth');
         Route::post('save_one','chaoxing/saveOneQuestion');
         Route::post('save','chaoxing/saveAllQuestion');
     });
