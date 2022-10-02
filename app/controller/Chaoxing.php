@@ -28,8 +28,11 @@ class Chaoxing extends Base
     /**
      * 查询题目
      *
-     * @param \think\Request $request
+     * @param Request $request
      * @return Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function queryAnswer(Request $request): Response
     {
@@ -81,6 +84,9 @@ class Chaoxing extends Base
      *
      * @param Request $request
      * @return Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function saveOneQuestion(Request $request): Response
     {
@@ -92,45 +98,70 @@ class Chaoxing extends Base
         }
 
         $q = (new Utils())->filterStr($question);
+        $msg = $this->save2db($q, $answer);
+
+        return $this->create('', $msg, 200);
+    }
+
+    /**
+     * 数据存入数据库
+     *
+     * @param string $q
+     * @param string $answer
+     * @param int $type
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    protected function save2db(string $q, string $answer, int $type = 6): string
+    {
         $q_hash = md5($q);
 
         $t = (new TikuModel())->where('hash', $q_hash)->field(['id'])->find();
         if (!$t) {
             TikuModel::create([
                 'hash' => $q_hash,
+                'type' => $type,
                 'question' => $q,
                 'answer' => $answer,
                 'ip' => $this->ip
             ]);
-            $msg = '录入';
+            $msg = 'success';
         } else {
             TikuModel::update(['answer' => $answer], ['id' => $t['id']]);
-            $msg = '更新';
+            $msg = 'update';
+        }
+        return $msg;
+    }
+
+    /**
+     * 录入多条题目
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function saveAllQuestion(Request $request): Response
+    {
+        $data = $request->param('data');
+
+        if (!$data) {
+            return $this->create('', '录入参数不全', 400);
         }
 
-        return $this->create('', $msg, 200);
-    }
+        $data = json_decode($data);
 
-    /**
-     * 保存更新的资源
-     *
-     * @param \think\Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * 删除指定资源
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function delete($id)
-    {
-        //
+        $total = 0;
+        $status = [];
+        foreach ($data as $k => $v) {
+            $q = (new Utils())->filterStr($v->question);
+            $_m = $this->save2db($q, $v->answer, $v->type);
+            $status[] = [$k + 1 => $_m];
+            $total += 1;
+        }
+        return $this->create(['total' => $total, 'status' => $status], '', 200);
     }
 }

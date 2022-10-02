@@ -17,6 +17,7 @@ Route::group('api',function () {
         Route::get('tips','chaoxing/tips');
         Route::post('cx','chaoxing/queryAnswer');
         Route::post('save_one','chaoxing/saveOneQuestion');
+        Route::post('save','chaoxing/saveAllQuestion');
     });
 });
 

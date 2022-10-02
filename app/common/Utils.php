@@ -34,10 +34,10 @@ class Utils
      */
     protected function filterHtml(string $str): string
     {
-        $str = strip_tags($str,"<img>");
+        $str = strip_tags($str, "<img>");
 
         $RegExp = '/(&lt;|<)img.*?(&gt;|>)/';
-        $res = preg_match_all($RegExp,$str,$result);
+        $res = preg_match_all($RegExp, $str, $result);
         if ($res) {
             $imgArray = $result[0];
         } else {
@@ -45,14 +45,14 @@ class Utils
         }
 
         $RegExp = '/src=[\'\"](.*?)[\'\"]/';
-        $res = preg_match_all($RegExp,$str,$result);
+        $res = preg_match_all($RegExp, $str, $result);
         if ($res) {
             $imgUrlArray = $result[1];
         } else {
             $imgUrlArray = array();
         }
 
-        $str = str_replace($imgArray,$imgUrlArray,$str);
+        $str = str_replace($imgArray, $imgUrlArray, $str);
         return $str;
     }
 
@@ -66,8 +66,8 @@ class Utils
     {
         $oldChar = array(" ", "　", "\t", "\n", "\r");
         $newChar = array("", "", "", "", "");
-        $str = str_replace($oldChar,$newChar,$str);
-        $str =  preg_replace("/(\s|\&nbsp\;|　|\xc2\xa0)/","",$str);
+        $str = str_replace($oldChar, $newChar, $str);
+        $str = preg_replace("/(\s|\&nbsp\;|　|\xc2\xa0)/", "", $str);
         return $str;
     }
 
@@ -85,7 +85,7 @@ class Utils
         //英文标点符号
         $enChar = array("!", ",", ".", ";", "<", ">", "(", ")", "?", "{", "}", "\"", ":", "{", "}", "\"", "'", "'");
 
-        $str = str_replace($chChar,$enChar,$str);
+        $str = str_replace($chChar, $enChar, $str);
 
         return $str;
     }
@@ -98,41 +98,41 @@ class Utils
      */
     protected function filterOther(string $str): string
     {
-        $str = preg_replace('/\[填空\(\d\)]/','',$str);
-        $str = preg_replace('/\[填空\d]/','',$str);
-        $str = preg_replace('/\[填空]/','',$str);
-        $str = preg_replace('/^\d+\s/','',$str);
-        $str = preg_replace('/\[填空\d]/','',$str);
-        $str = preg_replace('/\+/','+',$str);
-        $str = preg_replace('/\-/','-',$str);
-        $str = preg_replace('/\=/','=',$str);
-        $str = preg_replace('/\&nbsp\;/','',$str);
-        $str = preg_replace('/\&ensp\;/','',$str);
-        $str = preg_replace('/\&emsp\;/','',$str);
-        $str = preg_replace('/\&lt\;/','<',$str);
-        $str = preg_replace('/\&gt\;/','>',$str);
-        $str = preg_replace('/\&amp\;/','&',$str);
-        $str = preg_replace('/\&quot\;/','"',$str);
-        $str = preg_replace('/\&times\;/','×',$str);
-        $str = preg_replace('/\&divide\;/','÷',$str);
-        $str = preg_replace('/\&ldquo\;/','“',$str);
-        $str = preg_replace('/\&rdquo\;/','”',$str);
-        $str = preg_replace('/\&\#39\;/','\'',$str);
-        $str = preg_replace('/\&rsquo\;/','’',$str);
-        $str = preg_replace('/\&mdash\;/','—',$str);
-        $str = preg_replace('/\&ndash\;/','–',$str);
-        $str = str_replace('\u00a0','',$str);
-        $str = str_replace('\u2003','',$str);
-        $str = str_replace('\u2002','',$str);
-        $str = str_replace('\u0020','',$str);
-        $str = preg_replace('/\s+/','',$str);
-        $str = preg_replace('/<![\S\s]*?>/','',$str);
-        $str = preg_replace('/\(\d+\.\d+分\)$/','',$str);
-        $str = preg_replace('/·/','',$str);
-        $str = preg_replace('/^([.;?,\'":])/','',$str);
-        $str = preg_replace('/([.;?,\'":])$/','',$str);
-        $str = preg_replace('/题型说明[:：]请输入题型说明/','',$str);
-        $str = preg_replace('/题型说明[:：]每题\d+分[,，]共\d+分/','',$str);
+        $str = preg_replace('/\[填空\(\d\)]/', '', $str);
+        $str = preg_replace('/\[填空\d]/', '', $str);
+        $str = preg_replace('/\[填空]/', '', $str);
+        $str = preg_replace('/^\d+\s/', '', $str);
+        $str = preg_replace('/\[填空\d]/', '', $str);
+        $str = preg_replace('/\+/', '+', $str);
+        $str = preg_replace('/\-/', '-', $str);
+        $str = preg_replace('/\=/', '=', $str);
+        $str = preg_replace('/\&nbsp\;/', '', $str);
+        $str = preg_replace('/\&ensp\;/', '', $str);
+        $str = preg_replace('/\&emsp\;/', '', $str);
+        $str = preg_replace('/\&lt\;/', '<', $str);
+        $str = preg_replace('/\&gt\;/', '>', $str);
+        $str = preg_replace('/\&amp\;/', '&', $str);
+        $str = preg_replace('/\&quot\;/', '"', $str);
+        $str = preg_replace('/\&times\;/', '×', $str);
+        $str = preg_replace('/\&divide\;/', '÷', $str);
+        $str = preg_replace('/\&ldquo\;/', '“', $str);
+        $str = preg_replace('/\&rdquo\;/', '”', $str);
+        $str = preg_replace('/\&\#39\;/', '\'', $str);
+        $str = preg_replace('/\&rsquo\;/', '’', $str);
+        $str = preg_replace('/\&mdash\;/', '—', $str);
+        $str = preg_replace('/\&ndash\;/', '–', $str);
+        $str = str_replace('\u00a0', '', $str);
+        $str = str_replace('\u2003', '', $str);
+        $str = str_replace('\u2002', '', $str);
+        $str = str_replace('\u0020', '', $str);
+        $str = preg_replace('/\s+/', '', $str);
+        $str = preg_replace('/<![\S\s]*?>/', '', $str);
+        $str = preg_replace('/\(\d+\.\d+分\)$/', '', $str);
+        $str = preg_replace('/·/', '', $str);
+        $str = preg_replace('/^([.;?,\'":])/', '', $str);
+        $str = preg_replace('/([.;?,\'":])$/', '', $str);
+        $str = preg_replace('/题型说明[:：]请输入题型说明/', '', $str);
+        $str = preg_replace('/题型说明[:：]每题\d+分[,，]共\d+分/', '', $str);
         return $str;
     }
 }
