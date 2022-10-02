@@ -16,6 +16,7 @@ class Wenti extends Model
         'create_time' => 'int',
         'update_time' => 'int',
     ];
+
     // 自动时间戳
     protected $autoWriteTimestamp = true;
 }

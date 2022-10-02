@@ -15,15 +15,16 @@ Route::group('api',function () {
         Route::get('cron','admin/cron');
         Route::get('auth','auth/index');
         Route::get('tips','chaoxing/tips');
+        Route::get('enc','chaoxing/enc');
         Route::post('cx','chaoxing/queryAnswer');
         Route::post('save_one','chaoxing/saveOneQuestion');
         Route::post('save','chaoxing/saveAllQuestion');
-        Route::get('enc','chaoxing/enc');
     });
 });
 
 
 Route::group('out',function () {
-    Route::resource('add','admin');
+    Route::post('add','admin/save');
+    Route::get('get','admin/outPut');
     Route::resource("active",'active');
 });

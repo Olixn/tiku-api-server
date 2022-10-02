@@ -2,6 +2,7 @@
 namespace app\controller;
 
 use app\BaseController;
+use app\model\Wenti;
 
 class Index extends BaseController
 {
@@ -12,6 +13,7 @@ class Index extends BaseController
 
 //    public function index()
 //    {
-//
+//        var_dump((new Wenti())->order('id desc')->find());
+//        echo Wenti::getLastSql();
 //    }
 }
