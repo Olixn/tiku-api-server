@@ -6,6 +6,7 @@ namespace app\controller;
 use app\common\Utils;
 use app\model\Tiku as TikuModel;
 use app\model\Wenti as WentiModel;
+use think\exception\ErrorException;
 use think\Request;
 use think\Response;
 
@@ -78,6 +79,46 @@ class Chaoxing extends Base
         return $this->create($rep, '暂无答案', 400);
     }
 
+    /**
+     * 生成Enc加密串
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function enc(Request $request): Response
+    {
+        $params = $request->param();
+
+        if (!$params) {
+            return $this->create('', '传入参数为空', 400);
+        }
+
+        try {
+            $classId = $params['a'];
+            $userId = $params['b'];
+            $jobId = $params['c'];
+            $objectId = $params['d'];
+            $playingTime = $params['e'];
+            $duration = $params['f'];
+            $clipTime = $params['g'];
+        } catch (ErrorException $e) {
+            return $this->create('', '传入参数不全', 400);
+        }
+
+
+        $enc = sprintf("[%s][%s][%s][%s][%s][%s][%s][%s]",
+            $classId,
+            $userId,
+            $jobId,
+            $objectId,
+            $playingTime * 1000,
+            'd_yHJ!$pdA~5',
+            $duration * 1000,
+            $clipTime
+        );
+
+        return $this->create(['ne21enc' => md5($enc)]);
+    }
 
     /**
      * 录入单条题目
