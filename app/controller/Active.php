@@ -50,7 +50,7 @@ class Active extends Base
                 'uid' => $data['uid'],
                 'code' => $data['code'],
                 'ip' => $this->ip,
-                'end_time' => 864000 * (int)$res['time'] + time()
+                'end_time' => 86400 * (int)$res['time'] + time()
             ]);
             $code = CodesModel::update(['status' => 0], ['id' => $res['id']]);
             if ($user->isEmpty() || $code->isEmpty()) {

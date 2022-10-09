@@ -43,7 +43,7 @@ class Chaoxing extends Base
             $rep = [
                 'answer' => ""
             ];
-            return $this->create($rep, '题目为空', 400);
+            return $this->create($rep, '题目为空');
         }
 
         // 过滤题目标点等
@@ -76,7 +76,7 @@ class Chaoxing extends Base
         }
 
         $rep = ['answer' => ""];
-        return $this->create($rep, '暂无答案', 400);
+        return $this->create($rep, '暂无答案');
     }
 
     /**
@@ -170,7 +170,10 @@ class Chaoxing extends Base
             ]);
             $msg = 'success';
         } else {
-            TikuModel::update(['answer' => $answer], ['id' => $t['id']]);
+            TikuModel::update([
+                'answer' => $answer,
+                'type' => $type
+            ], ['id' => $t['id']]);
             $msg = 'update';
         }
         return $msg;

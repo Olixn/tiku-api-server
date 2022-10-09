@@ -35,7 +35,7 @@ class Auth extends Base
             'uid.number' => "权限验证失败，用户ID不合法！",
         ]);
         if (!$validate->check($data)) {
-            return $this->create('', $validate->getError(), 400);
+            return $this->create('', $validate->getError());
         }
 
         $user = UsersModel::where('uid', $data['uid'])->select();
