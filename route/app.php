@@ -24,7 +24,8 @@ Route::group('api',function () {
 
 
 Route::group('out',function () {
-    Route::post('add','admin/save');
+    Route::post('add_code','admin/save');
+    Route::post('add_user','admin/saveUser');
     Route::get('get','admin/outPut');
     Route::resource("active",'active');
 });

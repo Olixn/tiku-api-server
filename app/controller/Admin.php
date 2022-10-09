@@ -8,6 +8,7 @@ use app\model\Users as UsersModel;
 use app\model\Wenti as WentiModel;
 use app\validate\Admin as AdminValidate;
 use think\exception\ValidateException;
+use think\facade\Validate;
 use think\Request;
 use think\Response;
 
@@ -45,6 +46,46 @@ class Admin extends Base
         }
 
         return $this->create('', '激活码添加成功~');
+    }
+
+    /**
+     * 录入用户
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function saveUser(Request $request): Response
+    {
+        $data = $request->param();
+
+        $validate = Validate::rule([
+            'sign' => 'require',
+            'uid' => 'require|number|unique:users',
+            'ip' => 'require',
+            'code' => 'require',
+            'time' => 'require|number'
+        ])->message([
+            'sign.require' => "权限验证失败",
+            'uid.require' => "权限验证失败，用户ID不能为空！",
+            'uid.number' => "权限验证失败，用户ID不合法！",
+        ]);
+
+        if (!$validate->check($data)) {
+            return $this->create('', $validate->getError(), 400);
+        }
+
+        if (!$data['sign'] || $data['sign'] != md5($this->sign)) {
+            return $this->create('', 'sign error ~', 400);
+        }
+
+        $res = UsersModel::create([
+            'uid' => $data['uid'],
+            'code' => $data['code'],
+            'end_time' => $data['time'],
+            'ip' => $data['ip']
+        ]);
+
+        return $this->create(['userId' => $res['id']], 'success', 200);
     }
 
     /**
