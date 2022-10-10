@@ -28,4 +28,5 @@ Route::group('out',function () {
     Route::post('add_user','admin/saveUser');
     Route::get('get','admin/outPut');
     Route::resource("active",'active');
+    Route::get('status','admin/sysStatus');
 });

@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace app\controller;
 
 use app\model\Codes as CodesModel;
+use app\model\Tiku as TikuModel;
 use app\model\Users as UsersModel;
 use app\model\Wenti as WentiModel;
 use app\validate\Admin as AdminValidate;
@@ -140,6 +141,23 @@ class Admin extends Base
         }
 
         return $this->create('', '无题目~', 400);
+    }
+
+    /**
+     * 系统统计信息
+     *
+     * @return Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function sysStatus(): Response
+    {
+        $t = (new TikuModel())->order('id DESC')->find();
+        $this->redis->select(3);
+        $r = $this->redis->dbSize();
+
+        return $this->create(['online' => $r, 'total' => $t['id'], 'update_at' => $t['create_time']]);
     }
 
 }
