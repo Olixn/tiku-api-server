@@ -6,7 +6,9 @@ namespace app\controller;
 use app\common\Utils;
 use app\model\Tiku as TikuModel;
 use app\model\Wenti as WentiModel;
+use app\queue\ChaoxingUpdate;
 use think\exception\ErrorException;
+use think\facade\Queue;
 use think\Request;
 use think\Response;
 
@@ -202,8 +204,14 @@ class Chaoxing extends Base
         $status = [];
         foreach ($data as $k => $v) {
             $q = (new Utils())->filterStr($v->question);
-            $_m = $this->save2db($q, $v->answer, $v->type);
-            $status[] = [$k + 1 => $_m];
+            $array = [
+                'hash' => md5($q),
+                'type' => $v->type,
+                'question' => $q,
+                'answer' => $v->answer,
+                'ip' => $this->ip
+            ];
+            Queue::push(ChaoxingUpdate::class,json_encode($array),'ChaoxingUpdate');
             $total += 1;
         }
         return $this->create(['total' => $total, 'status' => $status], '', 200);

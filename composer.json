@@ -25,7 +25,8 @@
         "topthink/think-orm": "^2.0",
       "ext-redis": "*",
         "firebase/php-jwt": "^6.2",
-      "ext-json": "*"
+      "ext-json": "*",
+        "topthink/think-queue": "^3.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
