@@ -20,7 +20,7 @@ class Chaoxing extends Base
     public function tips()
     {
         $rep = [
-            'msg' => "倍速播放、秒过会导致不良记录且清空学习进度！<br />题库在慢慢补充，搜不到的题目系统会记录并在后台进行异步更新，请换个时间再试。<br /><span style='color: red;'>题库自助收录视频教程：</span><a href='https://www.bilibili.com/video/BV1t14y1a7gn' style='color: blue;' target='_blank'>点击观看</a><br /><a href='https://scriptcat.org/script-show-page/639' style='color: blue;' target='_blank'>脚本源代码托管(v.1.7.2)</a>"
+            'msg' => "倍速播放、秒过会导致不良记录且清空学习进度！<br />题库在慢慢补充，搜不到的题目系统会记录并在后台进行异步更新，请换个时间再试。<br /><span style='color: red;'>题库自助收录视频教程：</span><a href='https://www.bilibili.com/video/BV1t14y1a7gn' style='color: blue;' target='_blank'>点击观看</a><br /><a href='https://scriptcat.org/script-show-page/639' style='color: blue;' target='_blank'>脚本源代码托管(v1.8.0)</a>"
         ];
 
         return $this->create($rep);

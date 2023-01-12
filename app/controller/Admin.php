@@ -154,7 +154,7 @@ class Admin extends Base
     public function sysStatus(): Response
     {
         $t = (new TikuModel())->order('id DESC')->find();
-        $this->redis->select(3);
+        $this->redis->select(2);
         $r = $this->redis->dbSize();
 
         return $this->create(['online' => $r, 'total' => $t['id'], 'update_at' => $t['create_time']]);

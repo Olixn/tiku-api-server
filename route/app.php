@@ -15,10 +15,17 @@ Route::group('api',function () {
         Route::get('cron','admin/cron');
         Route::get('auth','auth/index');
         Route::get('tips','chaoxing/tips');
-        Route::get('enc','chaoxing/enc')->middleware('auth');
-        Route::post('cx','chaoxing/queryAnswer')->middleware('auth');
+        Route::get('enc','chaoxing/enc')->middleware(['serve_limit']);
+        Route::post('cx','chaoxing/queryAnswer')->middleware(['serve_limit']);
         Route::post('save_one','chaoxing/saveOneQuestion');
         Route::post('save','chaoxing/saveAllQuestion');
+    });
+});
+
+Route::group('xf-api',function () {
+    Route::group('v1',function () {
+        Route::post('cx','xfp/getAnswer');
+        Route::post('upload','xfp/upload');
     });
 });
 

@@ -14,7 +14,7 @@ class ServeLimit extends Base
     // 限制时间(秒)
     private $duration = 60;
     // 限制次数
-    private $number = 10;
+    private $number = 60;
 
     /**
      * IP流量控制
@@ -31,7 +31,7 @@ class ServeLimit extends Base
         if ($isCan == "1") {
             return $next($request);
         } else {
-            return $this->create('','访问太快了~触发流控限制，请稍后再试！',200);
+            return $this->create('访问太快了~触发流控限制，请稍后再试！', '访问太快了~触发流控限制，请稍后再试！', 200);
         }
     }
 

@@ -34,7 +34,7 @@ class Active extends Base
      */
     public function save(Request $request)
     {
-        $data = $request->param();
+        $data = $request->param('data');
 
         try {
             // 验证传入参数
